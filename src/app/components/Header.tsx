@@ -2,8 +2,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { authClient } from "@/lib/auth-client";
 
 const Header = () => {
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+  console.log(user);
+
   return (
     <header className="bg-slate-600 text-gray-100 shadow-lg">
       <nav className="flex items-center justify-between p-4">
@@ -29,7 +34,8 @@ const Header = () => {
               width={50}
               height={50}
               alt="profile_icon"
-              src={"/default_icon.png"}
+              src={user?.image || "/default_icon.png"}
+              className="rounded-full object-cover"
             />
           </Link>
         </div>
