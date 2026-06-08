@@ -13,10 +13,33 @@ type BookProps = {
 
 const Book = ({ book }: BookProps) => {
   const [showModal, setShowModal] = useState(false);
-  const {data: session} = authClient.useSession();
+  const { data: session } = authClient.useSession();
   const user = session?.user;
   const router = useRouter();
-  
+
+  const startCheckout = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "applicatoin/json" },
+          body: JSON.stringify({
+            title: book.title,
+            price: book.price,
+            thumbnail: book.thumbnail.url,
+          }),
+        },
+      );
+      const responseData = await response.json();
+      if (responseData.checkout_url) {
+        window.location.href = responseData.checkout_url;
+      }
+    } catch (err) {
+      console.error("Stripe checkout error:", err);
+    }
+  };
+
   const handlePurchaseClick = () => {
     setShowModal(true);
   };
@@ -26,13 +49,13 @@ const Book = ({ book }: BookProps) => {
   };
 
   const handlePurchaseConfirm = () => {
-    if(!user) {
+    if (!user) {
       setShowModal(false);
-      router.push("/login")
+      router.push("/login");
     } else {
-      // Stripe
+      startCheckout();
     }
-  }
+  };
 
   return (
     <>
