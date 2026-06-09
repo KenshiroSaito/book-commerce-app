@@ -28,6 +28,8 @@ const Book = ({ book }: BookProps) => {
             title: book.title,
             price: book.price,
             thumbnail: book.thumbnail.url,
+            userId: user?.id,
+            bookId: book.id,
           }),
         },
       );
@@ -96,18 +98,18 @@ const Book = ({ book }: BookProps) => {
           </div>
         </a>
         {showModal && (
-          <div className="absolute top-0 left-0 right-0 bottom-0 bg-slate-900/50 flex justify-center items-center modal">
+          <div className="fixed top-0 left-0 right-0 bottom-0 bg-slate-900/50 flex justify-center items-center modal">
             <div className="bg-white p-8 rounded-lg">
               <h3 className="text-xl mb-4">Would you like to buy a book?</h3>
               <button
                 onClick={handlePurchaseConfirm}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4 cursor-pointer"
               >
                 Purchase
               </button>
               <button
                 onClick={handleCancel}
-                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
               >
                 Cancel
               </button>

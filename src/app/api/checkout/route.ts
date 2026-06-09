@@ -4,11 +4,15 @@ import { NextResponse } from "next/server";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST(request: Request) {
-  const { title, price, thumbnail } = await request.json();
+  const { title, price, thumbnail, bookId, userId } = await request.json();
 
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
+      metadata: {
+        bookId: bookId,
+      }, 
+      client_reference_id: userId,
       line_items: [
         {
           price_data: {
