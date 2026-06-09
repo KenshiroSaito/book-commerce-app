@@ -9,9 +9,10 @@ import { useRouter } from "next/navigation";
 
 type BookProps = {
   book: BookType;
+  isPurchased: boolean;
 };
 
-const Book = ({ book }: BookProps) => {
+const Book = ({ book, isPurchased }: BookProps) => {
   const [showModal, setShowModal] = useState(false);
   const { data: session } = authClient.useSession();
   const user = session?.user;
@@ -43,7 +44,11 @@ const Book = ({ book }: BookProps) => {
   };
 
   const handlePurchaseClick = () => {
-    setShowModal(true);
+    if (isPurchased) {
+      alert("You've already purchased this item.");
+    } else {
+      setShowModal(true);
+    }
   };
 
   const handleCancel = () => {

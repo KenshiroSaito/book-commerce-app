@@ -40,6 +40,7 @@ export async function POST(request: Request) {
     } else {
       return NextResponse.json({
         message: "You've already purchased this item.",
+        bookId: bookId,
       });
     }
   } catch (err) {

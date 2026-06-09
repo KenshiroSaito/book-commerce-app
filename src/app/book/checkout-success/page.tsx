@@ -23,7 +23,11 @@ const PurchaseSuccess = () => {
           );
           // console.log(await res.json());
           const data = await res.json();
-          setBookUrl(data.purchase.bookId);
+          if (data.purchase) {
+            setBookUrl(data.purchase.bookId);
+          } else if (data.bookId) {
+            setBookUrl(data.bookId);
+          }
         } catch (err) {
           console.error("Error fetching data: ", err);
         }
