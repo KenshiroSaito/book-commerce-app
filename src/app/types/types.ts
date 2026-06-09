@@ -6,6 +6,14 @@ type BookType = {
   thumbnail: { url: string; height: number; width: number };
   createdAt: string;
   updatedAt: string;
+  publishedAt: string;
 };
 
-export type { BookType };
+type PurchaseType = {
+  id: string;
+  userId: string;
+  bookId: string;
+  createdAt: string;
+};
+
+export type { BookType, PurchaseType };

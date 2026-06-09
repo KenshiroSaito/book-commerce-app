@@ -2,62 +2,32 @@
 
 import { getAllBooks } from "@/lib/microcms/client";
 import Book from "./components/Book";
-import { BookType } from "./types/types";
-
-// Dummy data
-// const books = [
-//   {
-//     id: 1,
-//     title: "Book 1",
-//     thumbnail: "/thumbnails/discord-clone-udemy.png",
-//     price: 10.99,
-//     author: {
-//       id: 1,
-//       name: "Author 1",
-//       description: "Author 1 description",
-//       profile_icon: "https://source.unsplash.com/random/2",
-//     },
-//     content: "Content 1",
-//     created_at: new Date().toString(),
-//     updated_at: new Date().toString(),
-//   },
-//   {
-//     id: 2,
-//     title: "Book 2",
-//     thumbnail: "/thumbnails/notion-udemy.png",
-//     price: 12.49,
-//     author: {
-//       id: 2,
-//       name: "Author 2",
-//       description: "Author 2 description",
-//       profile_icon: "https://source.unsplash.com/random/3",
-//     },
-//     content: "Content 2",
-//     created_at: new Date().toString(),
-//     updated_at: new Date().toString(),
-//   },
-//   {
-//     id: 3,
-//     title: "Book 3",
-//     price: 67.67,
-//     thumbnail: "/thumbnails/openai-chatapplication-udem.png",
-//     author: {
-//       id: 3,
-//       name: "Author 3",
-//       description: "Author 3 description",
-//       profile_icon: "https://source.unsplash.com/random/4",
-//     },
-//     content: "Content 3",
-//     created_at: new Date().toString(),
-//     updated_at: new Date().toString(),
-//   },
-//   // other data,,,,,
-// ];
+import { BookType, PurchaseType } from "./types/types";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 
 // eslint-disable-next-line @next/next/no-async-client-component
 export default async function Home() {
   const { contents } = await getAllBooks();
-  // console.log(contents);
+  const session = await auth.api.getSession({ headers: await headers() });
+  const user = session?.user;
+
+  let purchaseBookIds: string[];
+
+  if (user) {
+    const response = await await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/purchases/${user.id}`,
+      { cache: "no-store" }, // SSR
+    );
+    const purchasesData = await response.json();
+    // console.log(purchasesData);
+
+    purchaseBookIds = purchasesData.map(
+      (purchaseBook: PurchaseType) => purchaseBook.bookId,
+    );
+
+    // console.log(purchaseBookIds);
+  }
 
   return (
     <>
@@ -66,7 +36,11 @@ export default async function Home() {
           Book Commerce
         </h2>
         {contents.map((book: BookType) => (
-          <Book key={book.id} book={book} />
+          <Book
+            key={book.id}
+            book={book}
+            isPurchased={purchaseBookIds.includes(book.id)}
+          />
         ))}
       </main>
     </>
