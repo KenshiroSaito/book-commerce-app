@@ -20,13 +20,10 @@ export default async function Home() {
       { cache: "no-store" }, // SSR
     );
     const purchasesData = await response.json();
-    // console.log(purchasesData);
 
     purchaseBookIds = purchasesData.map(
       (purchaseBook: PurchaseType) => purchaseBook.bookId,
     );
-
-    // console.log(purchaseBookIds);
   }
 
   return (
