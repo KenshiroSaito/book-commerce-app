@@ -16,4 +16,13 @@ type PurchaseType = {
   createdAt: string;
 };
 
-export type { BookType, PurchaseType };
+type HeaderProps = {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    image?: string | null;
+  } | null;
+};
+
+export type { BookType, PurchaseType, HeaderProps };

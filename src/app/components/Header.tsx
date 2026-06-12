@@ -1,13 +1,11 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { HeaderProps } from "../types/types";
 
-const Header = () => {
-  const { data: session } = authClient.useSession();
-  const user = session?.user;
+const Header = ({ user }: HeaderProps) => {
   const router = useRouter();
 
   return (
