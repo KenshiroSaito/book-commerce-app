@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "./components/Header";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { Suspense } from "react";
+import LoadingSpinner from "./loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +37,7 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <Header user={user ?? null} />
-        {children}
+        <Suspense fallback={<LoadingSpinner />}>{children}</Suspense>
       </body>
     </html>
   );
