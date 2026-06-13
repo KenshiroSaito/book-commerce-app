@@ -13,7 +13,7 @@ function Login() {
         <div className="mt-8 space-y-6">
           <div className="text-center">
             <button
-              className="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center w-full"
+              className="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center w-full cursor-pointer"
               onClick={() =>
                 authClient.signIn.social({
                   provider: "github",
