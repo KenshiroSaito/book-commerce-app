@@ -1,12 +1,9 @@
-// "use client";
-
 import { getAllBooks } from "@/lib/microcms/client";
 import Book from "./components/Book";
 import { BookType, PurchaseType } from "./types/types";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 
-// eslint-disable-next-line @next/next/no-async-client-component
 export default async function Home() {
   const { contents } = await getAllBooks();
   const session = await auth.api.getSession({ headers: await headers() });
