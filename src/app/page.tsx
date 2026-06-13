@@ -9,18 +9,22 @@ export default async function Home() {
   const session = await auth.api.getSession({ headers: await headers() });
   const user = session?.user;
 
-  let purchaseBookIds: string[];
+  let purchaseBookIds: string[] = [];
 
   if (user) {
-    const response = await await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/purchases/${user.id}`,
-      { cache: "no-store" }, // SSR
-    );
-    const purchasesData = await response.json();
+    try {
+      const response = await await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/purchases/${user.id}`,
+        { cache: "no-store" }, // SSR
+      );
+      const purchasesData = await response.json();
 
-    purchaseBookIds = purchasesData.map(
-      (purchaseBook: PurchaseType) => purchaseBook.bookId,
-    );
+      purchaseBookIds = purchasesData.map(
+        (purchaseBook: PurchaseType) => purchaseBook.bookId,
+      );
+    } catch (err) {
+      console.error("Failed to fetch purchases:", err);
+    }
   }
 
   return (
