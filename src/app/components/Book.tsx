@@ -1,21 +1,21 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { BookType } from "../types/types";
 import { useState } from "react";
-import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { User } from "better-auth";
 
 type BookProps = {
   book: BookType;
   isPurchased: boolean;
+  user: User | null;
 };
 
-const Book = ({ book, isPurchased }: BookProps) => {
+const Book = ({ book, isPurchased, user }: BookProps) => {
   const [showModal, setShowModal] = useState(false);
-  const { data: session } = authClient.useSession();
-  const user = session?.user;
+  // const { data: session } = authClient.useSession();
+  // const user = session?.user;
   const router = useRouter();
 
   const startCheckout = async () => {

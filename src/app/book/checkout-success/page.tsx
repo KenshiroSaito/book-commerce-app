@@ -21,7 +21,6 @@ const PurchaseSuccess = () => {
               body: JSON.stringify({ session_id: sessionId }),
             },
           );
-          // console.log(await res.json());
           const data = await res.json();
           if (data.purchase) {
             setBookUrl(data.purchase.bookId);

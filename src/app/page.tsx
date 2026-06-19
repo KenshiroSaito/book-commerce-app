@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 
 export default async function Home() {
-  const { contents } = await getAllBooks();
+  const { contents } = await getAllBooks(); // On-demand
   const session = await auth.api.getSession({ headers: await headers() });
   const user = session?.user;
 
@@ -38,6 +38,7 @@ export default async function Home() {
             key={book.id}
             book={book}
             isPurchased={purchaseBookIds.includes(book.id)}
+            user={user ?? null}
           />
         ))}
       </main>
