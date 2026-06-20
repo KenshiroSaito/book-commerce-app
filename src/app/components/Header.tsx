@@ -2,12 +2,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
 import { HeaderProps } from "../types/types";
 
 const Header = ({ user }: HeaderProps) => {
-  const router = useRouter();
-
   return (
     <header className="bg-slate-600 text-gray-100 shadow-lg">
       <nav className="flex items-center justify-between p-4">
