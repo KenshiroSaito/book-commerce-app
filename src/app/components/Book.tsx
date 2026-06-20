@@ -14,8 +14,6 @@ type BookProps = {
 
 const Book = ({ book, isPurchased, user }: BookProps) => {
   const [showModal, setShowModal] = useState(false);
-  // const { data: session } = authClient.useSession();
-  // const user = session?.user;
   const router = useRouter();
 
   const startCheckout = async () => {
@@ -26,9 +24,6 @@ const Book = ({ book, isPurchased, user }: BookProps) => {
           method: "POST",
           headers: { "Content-Type": "applicatoin/json" },
           body: JSON.stringify({
-            title: book.title,
-            price: book.price,
-            thumbnail: book.thumbnail.url,
             userId: user?.id,
             bookId: book.id,
           }),
